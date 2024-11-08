@@ -1,40 +1,52 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>เครื่องสุ่มโจทย์คณิตศาสตร์ - คริสต์มาสสเปเชียล</title>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div class="container">
-        <div class="snow"></div>
-        <div class="snow"></div>
-        <div class="snow"></div>
-        <div class="snow"></div>
-        <div class="snow"></div>
-        <div class="snow"></div>
-        <div class="snow"></div>
-        <div class="snow"></div>
-        <div class="snow"></div>
-        <h1>🎄 เครื่องสุ่มโจทย์คณิตศาสตร์ - คริสต์มาสสเปเชียล 🎅</h1>
-        <select id="topic-select">
-            <option value="complex">จำนวนเชิงซ้อน</option>
-            <option value="probability">ความน่าจะเป็น</option>
-        </select>
-        <div class="difficulty-buttons">
-            <button id="easy-btn" class="difficulty-btn active">🍬 ง่าย</button>
-            <button id="medium-btn" class="difficulty-btn">🎁 ปานกลาง</button>
-            <button id="hard-btn" class="difficulty-btn">🎄 ยาก</button>
-        </div>
-        <p id="question"></p>
-        <button id="generate-btn">🎁 สุ่มโจทย์ใหม่</button>
-        <button id="show-answer-btn">🔔 แสดงคำตอบ</button>
-        <div id="answer-section" style="display: none;">
-            <p id="answer"></p>
-            <pre id="solution"></pre>
-        </div>
+import random
+import time
+
+def play_number_game():
+    # สร้างตัวเลขสุ่มระหว่าง 1-100
+    secret_number = random.randint(1, 100)
+    attempts = 0
+    max_attempts = 10
+    
+    print("🎮 ยินดีต้อนรับสู่เกมทายตัวเลข! 🎮")
+    print("ฉันคิดตัวเลขไว้แล้วระหว่าง 1 ถึง 100")
+    print(f"คุณมีโอกาสทาย {max_attempts} ครั้ง")
+    
+    while attempts < max_attempts:
+        try:
+            # รับตัวเลขจากผู้เล่น
+            guess = int(input("\nทายตัวเลข: "))
+            attempts += 1
+            
+            if guess < 1 or guess > 100:
+                print("โปรดใส่ตัวเลขระหว่าง 1 ถึง 100 เท่านั้น!")
+                attempts -= 1
+            elif guess < secret_number:
+                print("📈 น้อยไป! ลองทายเลขที่มากกว่านี้")
+                print(f"เหลือโอกาสทายอีก {max_attempts - attempts} ครั้ง")
+            elif guess > secret_number:
+                print("📉 มากไป! ลองทายเลขที่น้อยกว่านี้")
+                print(f"เหลือโอกาสทายอีก {max_attempts - attempts} ครั้ง")
+            else:
+                print("\n🎊 ยินดีด้วย! คุณทายถูกต้อง! 🎊")
+                print(f"คุณทายถูกในครั้งที่ {attempts}")
+                return True
+                
+        except ValueError:
+            print("❌ โปรดใส่ตัวเลขเท่านั้น!")
+            attempts -= 1
+            
+        time.sleep(0.5)
+    
+    print(f"\n😢 เสียใจด้วย! ตัวเลขที่ถูกต้องคือ {secret_number}")
+    return False
+
+# เริ่มเกม
+while True:
+    play_number_game()
+    play_again = input("\nต้องการเล่นอีกครั้งไหม? (y/n): ")
+    if play_again.lower() != 'y':
+        print("ขอบคุณที่เล่นเกมกับเรา! 👋")
+        break
     </div>
     <script src="script.js"></script>
 </body>
